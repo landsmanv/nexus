@@ -5,7 +5,7 @@ services:
     network_mode: bridge
     volumes:
       - nexus-data:/nexus-data
-      - nexus-blobs:/srv/blobs
+      - nexus-blobs:/nexus-data/blobs
       - /etc/docker/nexus.vmoptions:/opt/sonatype/nexus/bin/nexus.vmoptions
     ports:
       - 8081:8081
