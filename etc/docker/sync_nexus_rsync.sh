@@ -12,12 +12,12 @@ RSYNC_SPEED_LIMIT=30000 #KBytes per second
 NEXUS_CONTAINER_NAME=cadvisor
 
 #ACTIVE HOST
-ACTIVE_HOSTNAME=h-w7uqf822.rg-fcsice01.uu-os8-core.eu-c-1.cloud.plus4u.net
+ACTIVE_HOSTNAME=
 ACTIVE_DATA=/var/lib/docker/volumes/docker_nexus-data
 ACTIVE_BLOBS=/var/lib/docker/volumes/docker_nexus-blobs
 
 #STANDBY HOST
-STANDBY_HOSTNAME=h-ln2mdfac.rg-fcsice01.uu-os8-core.eu-c-1.cloud.plus4u.net
+STANDBY_HOSTNAME=
 STANDBY_DATA=/var/lib/docker/volumes/docker_nexus-data
 STANDBY_BLOBS=/var/lib/docker/volumes/docker_nexus-blobs
 
