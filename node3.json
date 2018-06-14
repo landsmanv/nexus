@@ -2,9 +2,6 @@
     "kind": "Template",
     "apiVersion": "v1",
     "metadata": {
-        "annotations": {
-          "tags": "node3"
-        }
         "name": "node3",
         "creationTimestamp": null
     },
