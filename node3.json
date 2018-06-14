@@ -1,0 +1,176 @@
+{
+    "kind": "Template",
+    "apiVersion": "v1",
+    "metadata": {
+        "annotations": {
+          "tags": "node3"
+        }
+        "name": "node3",
+        "creationTimestamp": null
+    },
+    "objects": [
+        {
+            "kind": "DeploymentConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "s2i-demo-node3",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "s2i-demo-node3"
+                },
+                "annotations": {
+                    "openshift.io/generated-by": "OpenShiftWebConsole"
+                }
+            },
+            "spec": {
+                "strategy": {
+                    "type": "Rolling",
+                    "rollingParams": {
+                        "updatePeriodSeconds": 1,
+                        "intervalSeconds": 1,
+                        "timeoutSeconds": 600,
+                        "maxUnavailable": "25%",
+                        "maxSurge": "25%"
+                    },
+                    "resources": {},
+                    "activeDeadlineSeconds": 21600
+                },
+                "triggers": [
+                    {
+                        "type": "ImageChange",
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "s2i-demo-node3"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "namespace": "s2-poc",
+                                "name": "s2i-demo-node3:latest"
+                            }
+                        }
+                    },
+                    {
+                        "type": "ConfigChange"
+                    }
+                ],
+                "replicas": 1,
+                "test": false,
+                "selector": {
+                    "deploymentconfig": "s2i-demo-node3"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "app": "s2i-demo-node3",
+                            "deploymentconfig": "s2i-demo-node3"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "s2i-demo-node3",
+                                "image": "docker-registry.default.svc:5000/s2-poc/s2i-demo-node3@sha256:93b50d08c8de8ab82a40479444646eff9e723acf7247c0de5bade32bacea2e24",
+                                "ports": [
+                                    {
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    },
+                                    {
+                                        "containerPort": 8443,
+                                        "protocol": "TCP"
+                                    },
+                                    {
+                                        "containerPort": 8778,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "S2I_CONFIG1",
+                                        "valueFrom": {
+                                            "configMapKeyRef": {
+                                                "name": "s2i-demo-node3-configmap",
+                                                "key": "s2i.config1"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "name": "S2I_CONFIG2",
+                                        "valueFrom": {
+                                            "configMapKeyRef": {
+                                                "name": "s2i-demo-node3-configmap",
+                                                "key": "s2i.config2"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "name": "S2I_SCONFIG1",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "name": "s2i-demo-node3-secrets",
+                                                "key": "s2i.sconfig1"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "name": "S2I_SCONFIG2",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "name": "s2i-demo-node3-secrets",
+                                                "key": "s2i.sconfig2"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "resources": {},
+                                "livenessProbe": {
+                                    "httpGet": {
+                                        "path": "/health",
+                                        "port": 8080,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 20,
+                                    "timeoutSeconds": 5,
+                                    "periodSeconds": 10,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "readinessProbe": {
+                                    "httpGet": {
+                                        "path": "/health",
+                                        "port": 8080,
+                                        "scheme": "HTTP"
+                                    },
+                                    "initialDelaySeconds": 20,
+                                    "timeoutSeconds": 5,
+                                    "periodSeconds": 10,
+                                    "successThreshold": 1,
+                                    "failureThreshold": 3
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {},
+                        "schedulerName": "default-scheduler"
+                    }
+                }
+            },
+            "status": {
+                "latestVersion": 0,
+                "observedGeneration": 0,
+                "replicas": 0,
+                "updatedReplicas": 0,
+                "availableReplicas": 0,
+                "unavailableReplicas": 0
+            }
+        }
+    ]
+}
